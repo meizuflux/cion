@@ -1,4 +1,4 @@
-from neptune.exceptions import ValidatorError
+from cion.exceptions import ValidatorError
 
 def string(cast: bool = True):
     def inner(value: str):

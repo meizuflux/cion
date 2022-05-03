@@ -1,4 +1,4 @@
-from neptune import Schema, validators, types
+from cion import Schema, validators, types
 
 class User(Schema):
     fields = {

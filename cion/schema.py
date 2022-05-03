@@ -1,7 +1,7 @@
 from typing import Any
-from neptune import types
+from cion import types
 from collections import defaultdict
-from neptune.exceptions import ValidationError, ValidatorError
+from cion.exceptions import ValidationError, ValidatorError
 
 class Schema:
     fields: dict[str, Any]

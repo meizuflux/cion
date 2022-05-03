@@ -1,5 +1,5 @@
 from typing import Callable, Any, Iterable
-from neptune.exceptions import ValidatorError
+from cion.exceptions import ValidatorError
 
 Validator = Callable[[Any], Any]
 

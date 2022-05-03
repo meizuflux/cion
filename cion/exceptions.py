@@ -1,9 +1,9 @@
 from typing import Any, Optional
 
-class NeptuneException(Exception):
+class CionException(Exception):
     ...
 
-class ValidatorError(NeptuneException):
+class ValidatorError(CionException):
     message: str
 
     def __init__(self, message: str) -> None:
@@ -12,7 +12,7 @@ class ValidatorError(NeptuneException):
 Errors = dict[str, list[str]]
 ValidData = dict[str, Any]
 
-class ValidationError(NeptuneException):
+class ValidationError(CionException):
     errors: Errors
     data: Optional[ValidData] = None
 
