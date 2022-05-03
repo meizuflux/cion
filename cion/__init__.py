@@ -1,4 +1,7 @@
+from . import exceptions, types, validators
+from .exceptions import ValidationError, ValidatorError
 from .schema import Schema
-from . import types, validators, exceptions
 
-__version__ = "0.0.1"
+__all__ = ("Schema", "ValidatorError", "ValidationError", "exceptions", "types", "validators")
+
+__version__ = "0.0.2"

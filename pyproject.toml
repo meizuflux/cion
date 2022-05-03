@@ -1,3 +1,31 @@
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.pyright]
+pythonVersion = "3.10"
+exclude = [
+    "**/__pycache__",
+    "build",
+    "dist",
+    "docs",
+]
+include = [
+    "cion",
+    "cion/contrib"
+]
+reportUnusedImport = "error"
+strictListInference = true
+strictDictionaryInference = true
+venvPath = "venv"
+
+[tool.black]
+line-length = 120
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
+py_version=310
+combine_as_imports = true
+combine_star = true
+line_length = 120

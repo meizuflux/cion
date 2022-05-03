@@ -1,4 +1,5 @@
-from cion import Schema, validators, types
+from cion import Schema, types, validators
+
 
 class User(Schema):
     fields = {
@@ -7,33 +8,15 @@ class User(Schema):
             "constraints": [
                 validators.length(3, 64),
             ],
-            "required": True
+            "required": True,
         },
-        "password": {
-            "type": types.string(),
-            "constraints": [
-                validators.length(3, 1024)
-            ],
-            "required": True
-        },
-        "role": {
-            "type": types.string(),
-            "constraints": [
-                validators.one_of({"admin", "user"})
-            ],
-            "required": False
-        }
+        "password": {"type": types.string(), "constraints": [validators.length(3, 1024)], "required": True},
+        "role": {"type": types.string(), "constraints": [validators.one_of({"admin", "user"})], "required": False},
     }
 
-data = {
-    "username": "meizuflux",
-    "password": "password",
-    "role": "admin"
-}
+
+data = {"username": "meizuflux", "password": "password", "role": "admin"}
 
 inst = User(data)
 
 print(inst.validate())
-
-
-

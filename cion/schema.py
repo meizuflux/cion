@@ -1,13 +1,16 @@
-from typing import Any
-from cion import types
 from collections import defaultdict
+
+from cion import types
 from cion.exceptions import ValidationError, ValidatorError
 
-class Schema:
-    fields: dict[str, Any]
-    ignore_extra: bool = False
 
-    def __init__(self, data: dict, ignore_extra: bool = False):
+class Schema:
+    """Class that defines schema for data"""
+
+    fields: dict[str, dict]  #: The fields to be validated
+    ignore_extra: bool = False  #: Whether or not to ignore extra keys in the data
+
+    def __init__(self, data: dict, ignore_extra: bool = False) -> None:
         for value in self.fields.values():
             value.setdefault("type", types.string())
             value.setdefault("constraints", [])
@@ -18,6 +21,14 @@ class Schema:
         self.ignore_extra = ignore_extra
 
     def validate(self):
+        """Validates the data
+
+        Runs through all of the data and checks it against the fields
+
+        Raises:
+            ValidationError: When there is an error when validating
+            ValueError: When ``self.ignore_extra`` is `False`, and there are extra values in the data
+        """
         errors = defaultdict(list)
         valid_data = {}
 
@@ -48,13 +59,18 @@ class Schema:
         except NotImplementedError:
             pass
 
-        if bool(errors): # check if empty basically, returns true if filled
+        if bool(errors):  # check if empty basically, returns true if filled
             raise ValidationError(errors, valid_data)
 
         return valid_data
-                
 
     def after_load(self, data: dict):
-        raise NotImplementedError()
+        """Function called after data is validated
 
-    
+        The default implementation is to raise NotImplementedError
+
+        Args:
+            data (dict): The validated data
+
+        """
+        raise NotImplementedError()
