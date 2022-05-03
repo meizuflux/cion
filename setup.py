@@ -15,7 +15,7 @@ setup(
     long_description_content_type="text/markdown",
     author="meizuflux",
     project_urls={
-        "Documentation": "https://cion.readthedocs.io",
+        "Documentation": "https://cionpy.readthedocs.io",
         "Issue Tracker": "https://github.com/meizuflux/cion/issues",
         "Source Code": "https://github.com/meizuflux/cion",
     },
