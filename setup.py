@@ -11,6 +11,7 @@ setup(
     name="neptune",
     description="A data validation library",
     long_description=readme,
+    long_description_content_type="text/markdown",
     author="meizuflux",
     license="MIT",
     url="https://github.com/meizuflux/neptune",
