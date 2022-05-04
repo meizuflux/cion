@@ -11,7 +11,7 @@ User = Schema(
         "username": Field(
             type_=types.string(),
             validators=[validators.length(3, 64)],
-            required=True,
+            default="testing1234",
         ),
         "password": Field(
             type_=types.string(),
@@ -19,15 +19,12 @@ User = Schema(
             required=True,
         ),
     },
-    options=Options(extra=ExtraFieldsOption.COMBINE),
 )
 
 
 data = {
-    "username": "abcd",
+    "username": "meizuflux",
     "password": "password",
-    "test": "testing",
 }
-
 
 print(User.validate_data(data))

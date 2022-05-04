@@ -118,7 +118,10 @@ class Schema:
                 if options.required is True and options.default is None:
                     raise_error(name, "This field is required", delete_field=False)
                     continue
-                value = options.default
+                if options.default is not None:
+                    value = options.default
+                else:
+                    continue
 
             if value is None:
                 if options.allow_none is not True:
