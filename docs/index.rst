@@ -15,6 +15,7 @@ Welcome to Cion!
     :caption: API Reference
 
     Cion <reference/index>
+    Options <reference/options>
     Types <reference/types>
     Constraints <reference/validators>
     Errors <reference/errors>

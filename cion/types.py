@@ -1,10 +1,15 @@
 from cion.exceptions import ValidatorError
 
+__all__ = (
+    "string",
+    "integer",
+)
+
 
 def string(cast: bool = True):
     """A string type
 
-    Used when defining fields in :class:`.Schema`
+    Used when defining fields in :class:`cion.Schema`
 
     Args:
         cast (bool): Whether or not to try to cast the value to a :obj:`str`
@@ -27,7 +32,7 @@ def string(cast: bool = True):
 def integer(cast: bool = False):
     """An integer type
 
-    Used when defining fields in :class:`.Schema`
+    Used when defining fields in :class:`cion.Schema`
 
     Args:
         cast (bool): Whether or not to try to cast the value to an :obj:`int`

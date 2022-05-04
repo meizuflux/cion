@@ -2,6 +2,11 @@ from typing import Any, Callable, Iterable
 
 from cion.exceptions import ValidatorError
 
+__all__ = (
+    "length",
+    "one_of",
+)
+
 InnerValidator = Callable[[Any], Any]
 
 
@@ -11,7 +16,7 @@ def length(
     """Validates the length of a string
 
     The type of the value to be validated is not enforced as :obj:`str`
-    Used as a constraint on a field with :class:`.Schema`
+    Used as a constraint on a field with :class:`cion.Schema`
 
     Args:
         minimum (int): The minimum length that the string can be
@@ -34,7 +39,7 @@ def length(
 def one_of(values: Iterable[Any], error_message: str = "Value must be one of {values}") -> InnerValidator:
     """Checks if the value is in a list of values
 
-    Used as a constraint on a field with :class:`.Schema`
+    Used as a constraint on a field with :class:`cion.Schema`
     No assumptions are made about the type of the value
 
     Args:

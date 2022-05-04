@@ -1,22 +1,33 @@
-from cion import Schema, types, validators
+import sys
+
+sys.path.insert(0, "..")
 
 
-class User(Schema):
-    fields = {
-        "username": {
-            "type": types.string(),
-            "constraints": [
-                validators.length(3, 64),
-            ],
-            "required": True,
-        },
-        "password": {"type": types.string(), "constraints": [validators.length(3, 1024)], "required": True},
-        "role": {"type": types.string(), "constraints": [validators.one_of({"admin", "user"})], "required": False},
-    }
+from cion import Field, Options, Schema, types, validators
+from cion.schema import ExtraFieldsOption
+
+User = Schema(
+    fields={
+        "username": Field(
+            type_=types.string(),
+            validators=[validators.length(3, 64)],
+            required=True,
+        ),
+        "password": Field(
+            type_=types.string(),
+            validators=[validators.length(8, 1024)],
+            required=True,
+        ),
+    },
+    options=Options(extra=ExtraFieldsOption.COMBINE),
+)
 
 
-data = {"username": "meizuflux", "password": "password", "role": "admin"}
+data = {
+    "username": "abcd",
+    "password": "password",
+    "test": "testing",
+}
 
-inst = User(data)
 
-print(inst.validate())
+print(User.validate_data(data))
