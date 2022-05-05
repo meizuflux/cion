@@ -14,6 +14,7 @@
 import os
 import re
 import sys
+from datetime import datetime
 
 sys.path.insert(0, os.path.abspath(".."))
 
@@ -21,7 +22,7 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "Cion"
-copyright = "2022, meizuflux"
+copyright = f"{datetime.now().year}, <a href='https://meizuflux.com'>meizuflux</a>"
 author = "meizuflux"
 
 # The full version, including alpha/beta/rc tags
@@ -58,6 +59,8 @@ napoleon_use_rtype = False
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 
+pygments_style = "igor"
+
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
@@ -69,7 +72,15 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "furo"
+html_theme = "alabaster"
+html_theme_options = {
+    "page_width": "80%",
+    "body_max_width": "100%",
+    "show_powered_by": False,
+    "github_user": "meizuflux",
+    "github_repo": "cion",
+    "github_button": True,
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

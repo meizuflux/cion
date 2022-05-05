@@ -32,7 +32,7 @@ setup(
     version=version,
     install_requires=[],
     extras_require={
-        "docs": ["sphinx", "furo", "sphinx-copybutton"],
+        "docs": ["sphinx", "sphinx-copybutton"],
         "lint": [
             "pyright",
         ],

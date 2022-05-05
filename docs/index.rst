@@ -17,6 +17,6 @@ Welcome to Cion!
     Cion <reference/index>
     Options <reference/options>
     Types <reference/types>
-    Constraints <reference/validators>
+    Validators <reference/validators>
     Errors <reference/errors>
 
