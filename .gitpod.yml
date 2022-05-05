@@ -5,6 +5,6 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: just install
+  - init: cargo install just && just install
 
 
