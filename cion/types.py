@@ -1,3 +1,4 @@
+"""Types of values to be used in :class:`cion.Field`"""
 from cion.exceptions import ValidatorError
 
 __all__ = (

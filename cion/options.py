@@ -1,4 +1,4 @@
-"""Schema Options"""
+"""Options to be used with :class:`cion.Schema`"""
 from enum import Enum
 
 __all__ = ("Options", "ExtraFieldsOption")

@@ -1,3 +1,4 @@
+"""Objects for defining schema to validate data"""
 from collections import defaultdict
 from typing import Any, Callable, Optional
 

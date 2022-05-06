@@ -1,3 +1,4 @@
+"""Any errors raised by Cion"""
 from typing import Any, Optional
 
 __all__ = ("CionException", "ValidatorError", "ValidationError")
@@ -14,6 +15,8 @@ class ValidatorError(CionException):
 
     def __init__(self, message: str) -> None:
         self.message = message
+
+        super().__init__(message)
 
 
 Errors = dict[str, list[str]]

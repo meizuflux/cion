@@ -1,11 +1,20 @@
-from typing import Any, Callable, Iterable, Optional
+"""Validators for use in a :class:`cion.Field`"""
+import re
+from typing import Any, Callable, Iterable, Literal, Optional
 from uuid import UUID
 
 from cion.exceptions import ValidatorError
 
 __all__ = (
     "length",
+    "range_",
     "one_of",
+    "not_one_of",
+    "equal_to",
+    "uuid",
+    "regex",
+    "url",
+    "email",
 )
 
 InnerValidator = Callable[[Any], Any]
@@ -21,8 +30,7 @@ def length(
 ) -> InnerValidator:
     """Validates the length of a string
 
-    The type of the value to be validated is not enforced as :obj:`str`
-    Used as a constraint on a field with :class:`cion.Schema`
+    The type of the value to be validated is not enforced as `str`
 
     Args:
         minimum (int): The minimum length that the string can be
@@ -44,6 +52,7 @@ def length(
 
     Returns:
         InnerValidator: The inner function that is called when validating schema
+
     """
     error_message = base_error_message
     _error_messages = {
@@ -81,7 +90,7 @@ def length(
     return inner
 
 
-def range(
+def range_(
     minimum: Optional[int] = None,
     maximum: Optional[int] = None,
     error_message: str = "Number must be between {minimum} and {maximum}",
@@ -89,7 +98,6 @@ def range(
     """Validates that a number is in a range
 
     The type of the value to be validated is not enforced as :obj:`int`
-    Used as a constraint on a field with :class:`cion.Schema`
 
     Args:
         minimum (int): The minimum length that the number can be
@@ -97,8 +105,6 @@ def range(
         error_message (str): The error message that is raised
             You can use the ``minimum`` and ``maximum`` variables in the error message
 
-    Returns:
-        InnerValidator: The inner function that is called when validating schema
     """
 
     def inner(value: int):
@@ -188,3 +194,81 @@ def uuid(error_message: str = "Must be a valid UUID", **kwargs) -> InnerValidato
         return transformed
 
     return inner
+
+
+def regex(
+    pattern: str,
+    *,
+    cast: bool = False,
+    function: Literal["match", "fullmatch", "search"] = "fullmatch",
+    flags: Any = 0,
+    error_message="Must match regex",
+    **kwargs: Any,
+) -> InnerValidator:
+    """Match a value against a regex pattern
+
+    Note:
+        It is highly recommended that you customize the error message, as regex functions tend to be application specific, and not generic.
+
+
+    Args:
+        pattern: The regex pattern that you want to match a string against
+        cast: The value is always casted to a string, but if you wish to preserve the initial value, set this to ``False``
+        function (One of ``match``, ``fullmatch``, ``search``): What regex function to use against the value.
+            View the regex docs for information about these https://docs.python.org/3/library/re.html#re.fullmatch
+
+            TL,DR: Match matches at the start, fullmatch matches the entire string, and search searches the string for something to match
+        flags: Flags to pass to :meth:``re.compile``.
+            https://docs.python.org/3/library/re.html#re.A
+        error_message: The error message raised when the match object returned when matching is None.
+        kwargs: Arguments to pass to the method used for matching (again, see regex docs related to the function)
+
+    """
+    prog = re.compile(pattern, flags=flags)
+    to_call = getattr(prog, function)
+
+    def inner(value: str) -> Any:
+        casted = str(value)
+        match = to_call(casted, **kwargs)
+        if match is None:
+            raise ValidatorError(error_message)
+
+        return casted if cast is True else value
+
+    return inner
+
+
+def url(schemes: list[str] = ["http", "https"], *, error_message: str = "Must be a valid URL") -> InnerValidator:
+    """Validates that a value is a valid URL
+
+    This implementation uses :func:`regex` under the hood
+
+    Args:
+        schemes: A list of http schemes that will be valid
+        error_message: The error message to raise if a value is not a valid URL
+    """
+
+    return regex(
+        rf"({'|'.join(schemes)}):\/\/[-a-zA-Z0-9@:%_\+~#=]{1,256}\.[a-z]{1,25}[-a-zA-Z0-9@:%_\+.~#?&//=]",
+        cast=True,
+        flags=re.IGNORECASE,
+        error_message=error_message,
+    )
+
+
+def email(require_tld: bool = True, *, error_message="Must be an email") -> InnerValidator:
+    """Validates an email address
+
+    There are so many ways to validate emails, but this is a pretty simple and decently fast one.
+
+    If you have a better way, simply use the :func:`regex` function instead with a custom pattern, or define your own validator.
+
+    Args:
+        require_tld: Whether or not to require a TLD, like, ".com".
+
+            Example: with ``require_tld=False``, ``meizuflux@example`` will be valid.
+            With ``require_tld=True``, it will not be, but adding a ``.com`` will make it valid.
+        error_message: The error message to raise if the value is not a valid email
+    """
+    to_compile = r"^(?=.{6,254}$)[a-zA-Z_.]{1,249}@[a-zA-Z_.]{1,249}" + (r"\..{2,24}$" if require_tld else r"$")
+    return regex(to_compile, cast=False, flags=re.IGNORECASE, error_message=error_message)

@@ -1,7 +1,7 @@
 .. currentmodule:: cion
 
-Constraints
-===========
+Validators
+==========
 
 .. automodule:: cion.validators
     :members:
