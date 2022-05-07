@@ -7,6 +7,7 @@
 ![Format](https://img.shields.io/pypi/format/cion?style=flat-square)
 ![Python Versions](https://img.shields.io/pypi/pyversions/cion?style=flat-square)
 ![Commit Activity](https://img.shields.io/github/commit-activity/m/meizuflux/cion?style=flat-square)
+![Docs](https://readthedocs.org/projects/cionpy/badge/?style=flat-square)
 
 Cion is a minimal data validation library. It is unopinionated about how you get the input and what you do with the output.
 
