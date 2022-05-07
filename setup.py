@@ -51,6 +51,8 @@ setup(
         ],
         "test": [
             "pytest",
+            "coverage[toml]",
+            "pytest-cov",
         ],
     },
     python_requires=">=3.10",

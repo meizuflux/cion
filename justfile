@@ -18,7 +18,7 @@ lint:
     pyright
 
 test:
-    pytest
+    pytest --cov-report term --cov-report xml:coverage.xml --cov=cion tests/
 
 format:
     black .

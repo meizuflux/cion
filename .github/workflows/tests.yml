@@ -22,3 +22,9 @@ jobs:
     - name: Running Tests
       run: |
         just test
+    - uses: codecov/codecov-action@v2
+      with:
+        files: ./coverage.xml
+        flags: pytest
+        verbose: false
+    
