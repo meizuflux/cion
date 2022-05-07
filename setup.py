@@ -32,12 +32,26 @@ setup(
     version=version,
     install_requires=[],
     extras_require={
-        "docs": ["sphinx", "sphinx-copybutton"],
+        "docs": [
+            "sphinx",
+            "sphinx-copybutton",
+        ],
         "lint": [
             "pyright",
         ],
-        "build": ["setuptools", "wheel", "build"],
-        "format": ["black", "isort"],
+        "build": [
+            "setuptools",
+            "wheel",
+            "build",
+            "twine",
+        ],
+        "format": [
+            "black",
+            "isort",
+        ],
+        "test": [
+            "pytest",
+        ],
     },
     python_requires=">=3.10",
 )

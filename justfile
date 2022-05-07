@@ -12,10 +12,13 @@ serve +PORT="8000":
     python -m http.server {{PORT}} --directory docs/_build/html
 
 install:
-    pip install -e ".[docs,lint,build,format]"
+    pip install -e ".[docs,lint,build,format,test]"
 
 lint:
     pyright
+
+test:
+    pytest
 
 format:
     black .

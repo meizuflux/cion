@@ -22,7 +22,10 @@ def string(cast: bool = True):
     def inner(value: str):
         if not isinstance(value, str):
             if cast:
-                value = str(value)
+                try:
+                    value = str(value)
+                except:
+                    raise ValidatorError("Field must be a valid string")
             else:
                 raise ValidatorError("Field must be a valid string")
         return value
@@ -45,7 +48,10 @@ def integer(cast: bool = False):
     def inner(value: int):
         if not isinstance(value, int):
             if cast:
-                value = int(value)
+                try:
+                    value = int(value)
+                except:
+                    raise ValidatorError("Field must be a valid string")
             else:
                 raise ValidatorError("Field must be a valid integer")
         return value
