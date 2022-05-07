@@ -1,4 +1,4 @@
-name: Lint
+name: pyright
 
 on: [push, workflow_dispatch]
 
@@ -19,6 +19,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -e ".[lint]"
     - uses: extractions/setup-just@v1
-    - name: Run pylint
+    - name: Run pyright
       run: |
         just lint
