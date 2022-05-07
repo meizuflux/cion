@@ -10,6 +10,7 @@
 ![Docs](https://readthedocs.org/projects/cionpy/badge/?style=flat)
 ![Tests](https://github.com/meizuflux/cion/workflows/tests/badge.svg)
 ![Pyright](https://github.com/meizuflux/cion/workflows/pyright/badge.svg)
+![CodeCov](https://codecov.io/gh/meizuflux/cion/branch/master/graph/badge.svg)
 
 
 Cion is a minimal data validation library. It is unopinionated about how you get the input and what you do with the output.
