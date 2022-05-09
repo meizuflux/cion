@@ -1,0 +1,4 @@
+python := if os_family() == "windows" { "venv/Scripts/python.exe" } else { "venv/bin/python3" }
+
+run:
+  {{ python }} server.py

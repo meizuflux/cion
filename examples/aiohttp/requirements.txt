@@ -1,0 +1,3 @@
+aiohttp[speed]
+cion
+uvloop; platform_system != "Windows"
