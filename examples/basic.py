@@ -3,8 +3,7 @@ import sys
 sys.path.insert(0, "..")
 
 
-from cion import Field, Options, Schema, types, validators
-from cion.schema import ExtraFieldsOption
+from cion import Field, Schema, types, validators
 
 User = Schema(
     fields={
@@ -27,4 +26,4 @@ data = {
     "password": "password",
 }
 
-print(User.validate_data(data))
+print(User.validate(data))
