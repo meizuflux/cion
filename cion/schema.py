@@ -80,16 +80,20 @@ class Schema:
             ValueError: If ``__schema__`` is included as a field name
 
         """
-        if RESERVED_ERROR_KEY in fields.keys():
+        if RESERVED_ERROR_KEY in fields:
             raise ValueError(f"{RESERVED_ERROR_KEY} cannot be a field name, for it is reserved for internal purposes")
 
         self.fields = fields
         self.options = options or Options()
 
-    def validate_data(self, data: dict[Any, Any]) -> dict[Any, Any]:
+    def validate(self, data: dict[Any, Any]) -> dict[Any, Any]:
         """Validate a dict according to the defined schema
 
         Goes through every item in the data and applies constraints to it
+
+        Note:
+            It is important to ensure that ``data`` is an iterable that can have data removed.
+            It is highly reccomended to convert it to a dict before calling this method.
 
         Args:
             data: The data to be validated
