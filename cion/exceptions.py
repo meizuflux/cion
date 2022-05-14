@@ -32,7 +32,7 @@ class ValidationError(CionException):
     def __init__(self, errors: Errors, valid_data: ValidData) -> None:
         self.errors = errors
         self.data = valid_data
-        super().__init__("Errors were raised: " + str(dict(self.errors)))
+        super().__init__(f"Errors were raised: {dict(self.errors)}")
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} errors={self.errors} data={self.data}>"

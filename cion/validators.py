@@ -28,14 +28,15 @@ def length(
     base_error_message: str = "Length must be ",
     error_messages: Optional[dict[str, str]] = None,
 ) -> InnerValidator:
-    """Validates the length of a string
+    """Validates the length of a value
 
-    The type of the value to be validated is not enforced as `str`
+    This can be a string, list, or something like a dictionary, or basically any iterable
+    (anything that len(value) can be called on)
 
     Args:
-        minimum (int): The minimum length that the string can be
-        maximum (int): The maximum length that the string can be
-        equal_to (int): A number that the length of the string must equal.
+        minimum (int): The minimum length that the value can be
+        maximum (int): The maximum length that the value can be
+        equal_to (int): A number that the length of the value must equal.
             Cannot be used with minimum and maximum
         base_error_message (str): The start of the error message. View source for exact example
         error_messages (dict):
@@ -52,7 +53,6 @@ def length(
 
     Returns:
         InnerValidator: The inner function that is called when validating schema
-
     """
     error_message = base_error_message
     _error_messages = {
@@ -97,14 +97,11 @@ def range_(
 ) -> InnerValidator:
     """Validates that a number is in a range
 
-    The type of the value to be validated is not enforced as :obj:`int`
-
     Args:
         minimum (int): The minimum length that the number can be
         maximum (int): The maximum length that the number can be
         error_message (str): The error message that is raised
             You can use the ``minimum`` and ``maximum`` variables in the error message
-
     """
 
     def inner(value: int):
@@ -118,14 +115,14 @@ def range_(
     return inner
 
 
-def one_of(values: Iterable[Any], error_message: str = "Value must be one of {values}") -> InnerValidator:
+def one_of(*values: Any, error_message: str = "Value must be one of {values}") -> InnerValidator:
     """Checks if the value is in a list of values
 
     Used as a constraint on a field with :class:`cion.Schema`
     No assumptions are made about the type of the value
 
     Args:
-        values: An iterable containing valid values
+        values: Any non-keyword arguments are valid values
         error_message (str): The error message that is raised
             The `values` variable can be used, and it is the values joined together by a string
 
@@ -141,14 +138,14 @@ def one_of(values: Iterable[Any], error_message: str = "Value must be one of {va
     return inner
 
 
-def not_one_of(values: Iterable[Any], error_message: str = "Value must not be one of {values}") -> InnerValidator:
+def not_one_of(*values: Iterable[Any], error_message: str = "Value must not be one of {values}") -> InnerValidator:
     """Checks if the value is not in a list of values
 
     Used as a constraint on a field with :class:`cion.Schema`
     No assumptions are made about the type of the value
 
     Args:
-        values: An iterable containing valid values
+        values: Any non-keyword arguments are valid values
         error_message (str): The error message that is raised
             The `values` variable can be used, and it is the values joined together by a string
 
@@ -249,7 +246,7 @@ def url(schemes: list[str] = ["http", "https"], *, error_message: str = "Must be
     """
 
     return regex(
-        rf"({'|'.join(schemes)}):\/\/[-a-zA-Z0-9@:%_\+~#=]{1,256}\.[a-z]{1,25}[-a-zA-Z0-9@:%_\+.~#?&//=]",
+        rf"({'|'.join(schemes)}):\/\/[-a-zA-Z0-9@:%_\+~#=]{{1,256}}\.[a-z]{{1,25}}[-a-zA-Z0-9@:%_\+.~#?&//=]",
         cast=True,
         flags=re.IGNORECASE,
         error_message=error_message,

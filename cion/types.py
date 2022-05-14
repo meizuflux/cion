@@ -7,13 +7,10 @@ __all__ = (
 )
 
 
-def string(cast: bool = True):
+def string():
     """A string type
 
-    Used when defining fields in :class:`cion.Schema`
-
-    Args:
-        cast (bool): Whether or not to try to cast the value to a :obj:`str`
+    errors if the value is not a string
 
     Returns:
         InnerValidator: The inner validator
@@ -21,25 +18,16 @@ def string(cast: bool = True):
 
     def inner(value: str):
         if not isinstance(value, str):
-            if cast:
-                try:
-                    value = str(value)
-                except:
-                    raise ValidatorError("Field must be a valid string")
-            else:
-                raise ValidatorError("Field must be a valid string")
+            raise ValidatorError("Field must be a valid string")
         return value
 
     return inner
 
 
-def integer(cast: bool = False):
+def integer():
     """An integer type
 
-    Used when defining fields in :class:`cion.Schema`
-
-    Args:
-        cast (bool): Whether or not to try to cast the value to an :obj:`int`
+    errors if the value is not an integer
 
     Returns:
         InnerValidator: The inner validator
@@ -47,13 +35,7 @@ def integer(cast: bool = False):
 
     def inner(value: int):
         if not isinstance(value, int):
-            if cast:
-                try:
-                    value = int(value)
-                except:
-                    raise ValidatorError("Field must be a valid string")
-            else:
-                raise ValidatorError("Field must be a valid integer")
+            raise ValidatorError("Field must be a valid integer")
         return value
 
     return inner

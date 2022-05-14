@@ -1,5 +1,5 @@
 """Cion namespace"""
-from . import exceptions, options, schema, types, validators
+from . import converters, exceptions, options, schema, types, validators
 from .exceptions import ValidationError, ValidatorError
 from .options import Options
 from .schema import Field, Schema
@@ -10,6 +10,7 @@ __all__ = (
     "Options",
     "ValidatorError",
     "ValidationError",
+    "converters",
     "exceptions",
     "options",
     "schema",
@@ -17,4 +18,4 @@ __all__ = (
     "validators",
 )
 
-__version__ = "0.2.2"
+__version__ = "0.3.0"

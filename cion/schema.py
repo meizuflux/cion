@@ -3,7 +3,7 @@ from collections import defaultdict
 from typing import Any, Callable, Optional
 
 from cion.exceptions import ValidationError, ValidatorError
-from cion.options import ExtraFieldsOption, Options
+from cion.options import ExtraFields, Options
 
 __all__ = (
     "Field",
@@ -18,43 +18,36 @@ RESERVED_ERROR_KEY = "__schema__"
 class Field:
     """A field in a Schema"""
 
-    validators: list[Validator]
+    filters: list[Validator]
     default: Optional[Any] = None
-    allow_none: bool
+    nullable: bool
     required: bool = False
 
     def __init__(
         self,
         *,
-        type_: Validator,
-        validators: Optional[list[Validator]] = None,
+        filters: Optional[list[Validator]] = None,
         default: Any = None,
-        allow_none: bool = False,
+        nullable: bool = False,
         required: bool = False,
     ) -> None:
         """Create a field for use in a Schema
 
-        data is assumed to be the data passed to :meth:`Schema.validate_data`
+        data is assumed to be the data passed to :meth:`Schema.validate`
 
         Args:
-            type_: The type of the field.
-                This is the first validator that gets called
-            validators: A list of validators.
-                The validators are called in the exact order that they are specified, so when using multiple, ensure that it is the exact way that you want it
+            filters: A list of filters that get passed against the value
             default: The default value for the field, if it is not present in the data
-            allow_none: Whether to allow the value for the field to be None or not.
-                When this is ``True`` and the value is None, no validators are called
+            nullable: Whether the value can be None
+                When this is ``True`` and the value is None, no filters are called
             required: Whether or not the field is required to be in the data
-
         """
-        if validators is None:
-            validators = []
+        if required is True and default is not None:
+            raise ValueError("Cannot have a default if value is not required")
 
-        validators.append(type_)
-
-        self.validators = validators
+        self.filters = filters or []
         self.default = default
-        self.allow_none = allow_none
+        self.nullable = nullable
         self.required = required
 
 
@@ -78,10 +71,9 @@ class Schema:
 
         Raises:
             ValueError: If ``__schema__`` is included as a field name
-
         """
         if RESERVED_ERROR_KEY in fields:
-            raise ValueError(f"{RESERVED_ERROR_KEY} cannot be a field name, for it is reserved for internal purposes")
+            raise ValueError(f"{RESERVED_ERROR_KEY} cannot be a field name, it is reserved for internal purposes")
 
         self.fields = fields
         self.options = options or Options()
@@ -106,7 +98,7 @@ class Schema:
             ValidationError: When ``self.stop_on_error`` is false, this will contain all the errors, if any
         """
         errors = defaultdict(list)
-        validated: dict[str, Any] = {}
+        filtered: dict[str, Any] = {}
 
         def raise_error(field_name: str, error_message: str, *, delete_field: bool = True):
             if delete_field is True:
@@ -129,32 +121,33 @@ class Schema:
                     continue
 
             if value is None:
-                if options.allow_none is not True:
+                if options.nullable is not True:
                     raise_error(name, "This field is not allowed to be None")
                     continue
 
-            for validator in options.validators:
+            for filter_ in options.filters:
                 if value is not None:
                     try:
-                        value = validator(value)
-                    except ValidatorError as error:
-                        raise_error(name, error.message)
+                        value = filter_(value)
+                    except Exception as error:
+                        if isinstance(error, ValidatorError):
+                            raise_error(name, error.message)
                         continue
 
-            validated[name] = value
+            filtered[name] = value
 
         # We don't need to account for ExtraFields.IGNORE
         # since IGNORE means don't do anything
 
         # Since the validated data is deleted from the original data
         # anything left over is extra
-        if self.options.extra is ExtraFieldsOption.COMBINE:
-            validated = validated | data
+        if self.options.extra is ExtraFields.COMBINE:
+            filtered = filtered | data
 
-        if self.options.extra is ExtraFieldsOption.ERROR:
+        if self.options.extra is ExtraFields.ERROR:
             raise_error(RESERVED_ERROR_KEY, f"Found extra data: {', '.join(data.keys())}", delete_field=False)
 
         if bool(errors):  # Checks if there are any keys
-            raise ValidationError(errors, validated)
+            raise ValidationError(errors, filtered)
 
-        return validated
+        return filtered

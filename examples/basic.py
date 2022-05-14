@@ -8,13 +8,15 @@ from cion import Field, Schema, types, validators
 User = Schema(
     fields={
         "username": Field(
-            type_=types.string(),
-            validators=[validators.length(3, 64)],
+            filters=[
+                types.string(),
+                validators.length(3, 64),
+            ],
+            required=False,
             default="testing1234",
         ),
         "password": Field(
-            type_=types.string(),
-            validators=[validators.length(8, 1024)],
+            filters=[types.string(), validators.length(8, 1024)],
             required=True,
         ),
     },
@@ -22,7 +24,7 @@ User = Schema(
 
 
 data = {
-    "username": "meizuflux",
+    "username": 12312312,
     "password": "password",
 }
 

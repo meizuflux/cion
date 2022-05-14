@@ -1,10 +1,10 @@
 """Options to be used with :class:`cion.Schema`"""
 from enum import Enum
 
-__all__ = ("Options", "ExtraFieldsOption")
+__all__ = ("Options", "ExtraFields")
 
 
-class ExtraFieldsOption(Enum):
+class ExtraFields(Enum):
     """Enum that dictates what to do in the event that there is extra data"""
 
     IGNORE = "ignore"  #: Ignore the extra data and only return the validated data
@@ -15,13 +15,13 @@ class ExtraFieldsOption(Enum):
 class Options:
     """Schema Options"""
 
-    extra: ExtraFieldsOption = ExtraFieldsOption.IGNORE
+    extra: ExtraFields = ExtraFields.IGNORE
     stop_on_error: bool = False
 
     def __init__(
         self,
         *,
-        extra: ExtraFieldsOption = ExtraFieldsOption.IGNORE,
+        extra: ExtraFields = ExtraFields.IGNORE,
         stop_on_error: bool = False,
     ) -> None:
         """Class for creating Schema options

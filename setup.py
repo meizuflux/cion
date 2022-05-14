@@ -22,6 +22,7 @@ setup(
     license="MIT",
     url="https://github.com/meizuflux/cion",
     packages=find_packages(),
+    package_data={"cion": ["py.typed"]},
     classifiers=[
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3.10",

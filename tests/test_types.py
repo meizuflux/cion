@@ -15,20 +15,16 @@ class CannotCast:
 
 
 @pytest.mark.parametrize(
-    ("type_", "cast", "value", "expected_value", "expectation"),
+    ("type_", "value", "expectation"),
     [
-        (types.string, True, 1000, "1000", DOES_NOT_RAISE),
-        (types.string, True, CannotCast(), None, RAISES),
-        (types.string, False, 1000, 1000, RAISES),
-        (types.string, False, CannotCast(), None, RAISES),
-        (types.integer, True, "1000", 1000, DOES_NOT_RAISE),
-        (types.integer, True, "1000.0", 1000, RAISES),
-        (types.integer, True, "not an integer", None, RAISES),
-        (types.integer, False, 1000, 1000, DOES_NOT_RAISE),
-        (types.integer, False, "1000", 1000, RAISES),
-        (types.integer, False, "not an integer", 1000, RAISES),
+        (types.string, 1000, RAISES),
+        (types.string, None, RAISES),
+        (types.string, "1000", DOES_NOT_RAISE),
+        (types.integer, 1000, DOES_NOT_RAISE),
+        (types.integer, None, RAISES),
+        (types.integer, "1000", RAISES),
     ],
 )
-def test_cast_type(type_, cast, value, expected_value, expectation):
+def test_types(type_, value, expectation):
     with expectation:
-        assert type_(cast=cast)(value) == expected_value
+        type_()(value)  # types return an inner function

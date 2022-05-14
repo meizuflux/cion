@@ -16,6 +16,7 @@ Welcome to Cion!
 
     Cion <reference/index>
     Options <reference/options>
+    Converters <reference/converters>
     Types <reference/types>
     Validators <reference/validators>
     Errors <reference/errors>

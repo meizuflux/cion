@@ -1,17 +1,19 @@
-from aiohttp import web
+import sys
+
+sys.path.insert(0, "../..")
 
 import cion
+
+from aiohttp import web
 
 LoginSchema = cion.Schema(
     fields={
         "username": cion.Field(
-            type_=cion.types.string(),
-            validators=[cion.validators.length(3, 64)],
+            filters=[cion.types.string(), cion.validators.length(3, 64)],
             required=True,
         ),
         "password": cion.Field(
-            type_=cion.types.string(),
-            validators=[cion.validators.length(3, 1024)],
+            filters=[cion.types.string(), cion.validators.length(3, 1024)],
             required=True,
         ),
     }
