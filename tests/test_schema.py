@@ -1,8 +1,9 @@
-import cion
 import pytest
 
+import cion
 from cion.exceptions import ValidationError
 from cion.options import ExtraFields
+
 
 def test_field():
     field = cion.Field()
@@ -13,48 +14,27 @@ def test_field():
     assert field.required == False
 
     with pytest.raises(ValueError):
-        cion.Field(
-            required=True,
-            default="not none"
-        )
+        cion.Field(required=True, default="not none")
+
 
 def test_schema():
     options = cion.Options()
 
-    schema = cion.Schema(
-        fields={},
-        options=options
-    )
+    schema = cion.Schema(fields={}, options=options)
 
     assert schema.fields == {}
     assert schema.options == options
 
     with pytest.raises(ValueError):
-        cion.Schema(
-            fields={
-                cion.schema.RESERVED_ERROR_KEY: cion.Field()
-            }
-        )
+        cion.Schema(fields={cion.schema.RESERVED_ERROR_KEY: cion.Field()})
 
     del schema, options
 
     schema = cion.Schema(
         fields={
-            "name": cion.Field(
-                filters=[
-                    cion.types.string()
-                ],
-                required=True,
-                nullable=False
-            ),
-            "age": cion.Field(
-                filters=[
-                    cion.validators.range_(minimum=0, maximum=150)
-                ],
-                required=False,
-                default=10
-            ),
-            "height": cion.Field()
+            "name": cion.Field(filters=[cion.types.string()], required=True, nullable=False),
+            "age": cion.Field(filters=[cion.validators.range_(minimum=0, maximum=150)], required=False, default=10),
+            "height": cion.Field(),
         }
     )
 

@@ -5,14 +5,14 @@ from setuptools import find_packages, setup
 with open("cion/__init__.py") as f:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
 
-with open("README.md") as f:
+with open("README.rst") as f:
     readme = f.read()
 
 setup(
     name="cion",
     description="A data validation library",
     long_description=readme,
-    long_description_content_type="text/markdown",
+    long_description_content_type="text/x-rst",
     author="meizuflux",
     project_urls={
         "Documentation": "https://cionpy.readthedocs.io",

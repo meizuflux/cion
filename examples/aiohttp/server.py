@@ -2,9 +2,9 @@ import sys
 
 sys.path.insert(0, "../..")
 
-import cion
-
 from aiohttp import web
+
+import cion
 
 LoginSchema = cion.Schema(
     fields={

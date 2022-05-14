@@ -1,10 +1,8 @@
 import cion
 
+
 def test_validation_error():
-    error = cion.ValidationError(
-        {"username": ["Must be a string"]},
-        {"password": "qwertyuiop"}
-    )
+    error = cion.ValidationError({"username": ["Must be a string"]}, {"password": "qwertyuiop"})
 
     assert error.errors == {"username": ["Must be a string"]}
     assert error.data == {"password": "qwertyuiop"}

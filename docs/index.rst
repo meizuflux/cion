@@ -2,16 +2,16 @@
    sphinx-quickstart on Tue May  3 08:05:49 2022.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
-
-Welcome to Cion!
-================
+.. include:: ../README.rst
 
 .. toctree::
-   :caption: Contents:
+    :hidden:
+    :caption: Contents:
    
-   Getting Started <quickstart>
+    Getting Started <quickstart>
 
-.. toctree:: 
+.. toctree::
+    :hidden: 
     :caption: API Reference
 
     Cion <reference/index>
