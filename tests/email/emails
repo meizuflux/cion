@@ -1,0 +1,21 @@
+# valid
+email@example.com,false,true
+firstname.lastname@example.com,false,true
+email@subdomain.example.com,false,true
+firstname+lastname@example.com,false,true
+email@123.123.123.123,false,false
+1234567890@example.com,false,true
+email@example-one.com,false,true
+_______@example.com,false,true
+email@example.name,false,true
+email@example.museum,false,true
+email@example.co.jp,false,true
+firstname-lastname@example.com,false,true
+
+# invalid
+plainaddress,true,true
+#@%^%#$@#$@#.com,true,true
+@example.com,true,true
+email@example@example.com,true,true
+あいうえお@example.com,true,true
+email@example,true,true
