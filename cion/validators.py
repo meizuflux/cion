@@ -259,7 +259,7 @@ def email(require_tld: bool = True, *, error_message="Must be an email") -> Inne
     There are very many ways to match email addresses, ranging from just requiring the ``@`` symbol, to a large and slow regex.
 
     This email validator is under development, and will, for the most part, validate valid email addresses: ie, no valid email address will be rejected. However, there are a great many strings that will still match, valid email or not.
-    If you have your own method if validating email addresses, you can do that with a custom validator. 
+    If you have your own method if validating email addresses, you can do that with a custom validator.
 
     Args:
         require_tld: Whether or not to require a TLD, like, ".com".
@@ -268,5 +268,7 @@ def email(require_tld: bool = True, *, error_message="Must be an email") -> Inne
             With ``require_tld=True``, it will not be, but adding a ``.com`` will make it valid.
         error_message: The error message to raise if the value is not a valid email
     """
-    to_compile = r"^(?=.{6,254}$)[0-9a-zA-Z_.+-]{1,249}@[0-9a-zA-Z_.-]{1,249}" + (r"\..{2,24}$" if require_tld else r"$")
+    to_compile = r"^(?=.{6,254}$)[0-9a-zA-Z_.+-]{1,249}@[0-9a-zA-Z_.-]{1,249}" + (
+        r"\..{2,24}$" if require_tld else r"$"
+    )
     return regex(to_compile, cast=False, flags=re.IGNORECASE, error_message=error_message)

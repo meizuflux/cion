@@ -12,7 +12,7 @@ __all__ = (
 def string():
     """Attempts to convert a value to a string
 
-    Most objects can be converted to a string, but if some things override the :meth:`__str__` method, this will not work and will error
+    Most objects can be converted to a string, but if some things override the ``__str__`` method, this will not work and will error
 
     Returns:
         InnerValidator: The inner validator
