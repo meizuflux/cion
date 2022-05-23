@@ -9,7 +9,7 @@ build-docs:
     sphinx-build -a -n -N --keep-going -T -j auto docs docs/_build/html
 
 serve +PORT="8000":
-    python -m http.server {{PORT}} --directory docs/_build/html
+    python -m http.server {{PORT}} --directory docs/_build/html --bind 127.0.1
 
 install:
     pip install -e ".[docs,lint,build,format,test]"
