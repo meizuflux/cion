@@ -2,8 +2,15 @@ import re
 
 from setuptools import find_packages, setup
 
+version = None
 with open("cion/__init__.py") as f:
-    version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
+    for line in f.read().splitlines():
+        if line.startswith("__version__"):
+            # __version__ = "0.9"
+            delim = '"' if '"' in line else "'"
+            version = line.split(delim)[1]
+if version is None:
+    raise RuntimeError("Unable to find version string.")
 
 with open("README.rst") as f:
     readme = f.read()
@@ -36,6 +43,7 @@ setup(
         "docs": [
             "sphinx",
             "sphinx-copybutton",
+            "sphinx-autobuild",
         ],
         "lint": [
             "pyright",

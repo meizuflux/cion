@@ -9,6 +9,8 @@
     :caption: Contents:
    
     Getting Started <quickstart>
+    filters
+    custom_filters
 
 .. toctree::
     :hidden: 
