@@ -44,7 +44,7 @@ Usage
 -----
 
 View the `examples </examples>`__ directory and the `tests </tests>`__
-directory for examples on how to use Cion
+directory for examples on how to use Cion.
 
 Contributing
 ------------
