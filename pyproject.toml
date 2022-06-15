@@ -12,7 +12,7 @@ exclude = [
 ]
 include = [
     "cion",
-    "cion/contrib"
+    "cion/ext"
 ]
 reportUnusedImport = "error"
 strictListInference = true
