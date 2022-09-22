@@ -1,7 +1,7 @@
 import sys
 from typing import Iterable
 
-sys.path.insert(0, "..")
+sys.path.insert(0, "../..")
 
 import cion
 
@@ -10,7 +10,7 @@ def numbers_in_order(value: list[int]):
     if not isinstance(value, Iterable):
         raise cion.exceptions.ValidatorError("Must be a list of ints")
 
-    for i in range(len(value)):
+    for i in enumerate(value):
         item = value[i]
 
         if not isinstance(item, int):
