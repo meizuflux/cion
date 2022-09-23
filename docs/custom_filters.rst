@@ -34,7 +34,7 @@ From there, we can assign the filter to a field in a schema.
 .. literalinclude:: ../examples/custom_filter.py
     :start-after: # [Schema Start]
     :end-before: # [Schema End]
-    :emphasize-lines: 4-6
+    :emphasize-lines: 4-5
 
 Once we have declared a schema, we can validate any data.
 
@@ -57,6 +57,7 @@ Once we have declared a schema, we can validate any data.
     :start-after: # [Start Fails: order]
     :end-before: # [End Fails: order]
     :caption: Fails, the list must be in order
+
 
 
 
